@@ -1,6 +1,43 @@
-
-<div class="row">
-    <div class="col-md-3" *ngFor="let character of (characters$|async)?.results">
-         {{character.name}}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <app-filter [(filters)]="selectedFilters"></app-filter>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>selected filters</h3>
+                    <span *ngFor="let filter of selectedFilters">{{filter}},<button
+                            (click)="handleFilters(filter)">X</button></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <form [formGroup]="group">
+                        <input name="searchtext" formControlName="search" />
+                    </form>
+                </div>
+                <div class="col-md-8">
+                    <select name="fieldName" [(ngModel)]="sortValue">
+                        <option value="asc">
+                            Ascending
+                        </option>
+                        <option value="desc">
+                            Descending
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3" *ngFor="let character of characters$|async| sort:'id':sortValue">
+                    <div class=character-wrapper>
+                        id:{{character.id}}
+                        Name:{{character.name}}
+                        Gender:{{character.gender}}
+                        Species:{{character.species}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

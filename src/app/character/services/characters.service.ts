@@ -4,6 +4,7 @@ import { environment }
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Character } from '../models/character';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +13,15 @@ export class CharactersService {
 
   constructor(private http: HttpClient) { }
 
-  getCharacters(): Observable<any[]> {
+  getCharacters(): Observable<any> {
     return this.http
       .get<any[]>(`${environment.apiEndPoint}/api/character`)
-      // .pipe((character)=>{
-      //   return character.results;
-      // });
   }
 
 
-  searchCharacters(q: string): Observable<Character[]> {
+  searchCharacters(q: string): Observable<any> {
     return this.http
-      .get<Character[]>(`${environment.apiEndPoint}/api/character?q=${q}`);
+      .get<any[]>(`${environment.apiEndPoint}/api/character?q=${q}`);
   }
 
 }
