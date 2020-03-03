@@ -1,24 +1,30 @@
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
             <app-filter [(filters)]="selectedFilters"></app-filter>
         </div>
-        <div class="col-md-8">
-            <div class="row">
+        <div class="col-md-10">
+            <div class="row" *ngIf="selectedFilters.length">
                 <div class="col-md-12">
-                    <h3>selected filters</h3>
-                    <span *ngFor="let filter of selectedFilters">{{filter}},<button
-                            (click)="handleFilters(filter)">X</button></span>
+                    <h4>Selected filters</h4>
+                    <div class="selected-filters-wrapper">
+                        <div class="selected-filters" *ngFor="let filter of selectedFilters">{{filter}}
+                            <button (click)="handleFilters(filter)">X</button></div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row margin-top-10 margin-bottom-10">
                 <div class="col-md-4">
+                    <h6>Search by Name</h6>
                     <form [formGroup]="group">
                         <input name="searchtext" formControlName="search" />
                     </form>
                 </div>
-                <div class="col-md-8">
-                    <select name="fieldName" [(ngModel)]="sortValue">
+                <div class="col-md-5">
+
+                </div>
+                <div class="col-md-3">
+                    <select class="width-100 margin-top-25" name="fieldName" [(ngModel)]="sortValue">
                         <option value="asc">
                             Ascending
                         </option>
@@ -28,13 +34,60 @@
                     </select>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3" *ngFor="let character of characters$|async| sort:'id':sortValue">
+            <div class="row character-container">
+                <div class="col-md-3 padding-left-5 padding-right-5" *ngFor="let character of characters$|async| sort:'id':sortValue">
                     <div class=character-wrapper>
-                        id:{{character.id}}
-                        Name:{{character.name}}
-                        Gender:{{character.gender}}
-                        Species:{{character.species}}
+                        <div class="character-img">
+                            <img [src]="character.image" class="img-content" height="220" width="220">
+                            <div class="character-name">
+                                <div>{{character.name}}</div>
+                                <span class="font-10">id:{{character.id}}
+                                    - created {{character.created}}</span>
+                            </div>
+
+                        </div>
+                        <div class="character-info">
+                            <div class="info-text">
+                                <div class="info-key">
+                                    GENDER:
+                                </div>
+                                <div class="info-value">
+                                    {{character.gender}}
+                                </div>
+                            </div>
+                            <div class="info-text">
+                                <div class="info-key">
+                                    STATUS:
+                                </div>
+                                <div class="info-value">
+                                    {{character.status}}
+                                </div>
+                            </div>                           
+                            <div class="info-text">
+                                <div class="info-key">
+                                    SPECIES:
+                                </div>
+                                <div class="info-value">
+                                    {{character.species}}
+                                </div>
+                            </div>    
+                            <div class="info-text">
+                                <div class="info-key">
+                                    ORIGIN:
+                                </div>
+                                <div class="info-value">
+                                    {{character.origin?.name}}
+                                </div>
+                            </div>   
+                            <div class="info-text">
+                                <div class="info-key">
+                                    LAST LOCATION:
+                                </div>
+                                <div class="info-value">
+                                    {{character.location?.name}}
+                                </div>
+                            </div>                          
+                        </div>
                     </div>
                 </div>
             </div>

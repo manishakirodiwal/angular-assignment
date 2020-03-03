@@ -1,18 +1,23 @@
-<h2>Filters</h2>
-<h3>Gender</h3>
+<h3>Filters</h3>
 
-<ul>
-    <li *ngFor="let genderFilter of genderFilters;let index=index">
-        <input (change)="filterSelect(genderFilter,'Gender')"  type="checkbox" id="gender{{index}}"/>
-        <label for="gender{{index}}">{{genderFilter}}</label>
-    </li>
-</ul>
+<div class="filter-wrapper">
+    <h4>Gender</h4>
+    <ul>
+        <li *ngFor="let genderFilter of genderFilters;let index=index">
+            <input (change)="filterSelect(genderFilter,'Gender')" type="checkbox" id="gender{{index}}" />
+            <label for="gender{{index}}">{{genderFilter}}</label>
+        </li>
+    </ul>
+</div>
 
-<h3>Species</h3>
+<div class="filter-wrapper">
+
+<h4>Species</h4>
 
 <ul>
     <li *ngFor="let speciesFilter of speciesFilters;let index=index">
-        <input (change)="filterSelect(speciesFilter,'Species')" type="checkbox" id="species{{index}}"/>
+        <input (change)="filterSelect(speciesFilter,'Species')" type="checkbox" id="species{{index}}" />
         <label for="species{{index}}">{{speciesFilter}}</label>
     </li>
 </ul>
+</div>
