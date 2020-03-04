@@ -16,10 +16,10 @@ export class CharactersComponent implements OnInit {
   selectedFilters: string[] = [];
 
   searchText: string;
-  group: FormGroup; // form - collection of control
-  searchControl: FormControl // input box
+  group: FormGroup;
+  searchControl: FormControl
 
-  sortValue: string ='asc';
+  sortValue: string = 'asc';
 
   constructor(
     private charactersService: CharactersService,
@@ -29,7 +29,6 @@ export class CharactersComponent implements OnInit {
 
     this.searchControl = new FormControl();
     this.group = this.formBuilder.group({
-      // html binding name : control object
       'search': this.searchControl
     })
   }
@@ -47,8 +46,8 @@ export class CharactersComponent implements OnInit {
       );
 
     this.searchControl
-      .valueChanges // value change event.publisher/observable
-      .pipe(filter(value => !!value)) // non empty filter
+      .valueChanges
+      .pipe(filter(value => !!value))
       .pipe(map(value => value.toLowerCase()))
       .pipe(debounceTime(500))
       .subscribe(value => {
@@ -65,9 +64,10 @@ export class CharactersComponent implements OnInit {
       });
   }
 
-
   handleFilters(selectedFilter) {
     this.filterService.handleSelectedFilters(selectedFilter);
+    const selectedFilters = this.filterService.selectedFilters;
+    console.log('===selected',selectedFilters);
   }
 
 

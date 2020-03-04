@@ -4,7 +4,7 @@
     <h4>Gender</h4>
     <ul>
         <li *ngFor="let genderFilter of genderFilters;let index=index">
-            <input (change)="filterSelect(genderFilter,'Gender')" type="checkbox" id="gender{{index}}" />
+            <input (change)="filterSelect(genderFilter,'Gender')" [checked]="selectedFilters.includes(genderFilter)" type="checkbox" id="gender{{index}}" />
             <label for="gender{{index}}">{{genderFilter}}</label>
         </li>
     </ul>
@@ -16,7 +16,7 @@
 
 <ul>
     <li *ngFor="let speciesFilter of speciesFilters;let index=index">
-        <input (change)="filterSelect(speciesFilter,'Species')" type="checkbox" id="species{{index}}" />
+        <input (change)="filterSelect(speciesFilter,'Species')"  [checked]="selectedFilters.includes(speciesFilter)" type="checkbox" id="species{{index}}" />
         <label for="species{{index}}">{{speciesFilter}}</label>
     </li>
 </ul>

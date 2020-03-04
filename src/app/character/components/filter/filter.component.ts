@@ -10,13 +10,11 @@ import { FilterService } from '../../services/filter.service';
 export class FilterComponent implements OnInit {
   genderFilters: Array<string> = GENDER_FILTERS;
   speciesFilters: Array<string> = SPECIES_FILTERS;
-
   selectedFilters: Array<string> = [];
 
   @Input()
   filters: Array<string>;
 
-  // event name should be inputName + "Change"
   @Output()
   filtersChange: EventEmitter<Array<string>> = new EventEmitter();
 
