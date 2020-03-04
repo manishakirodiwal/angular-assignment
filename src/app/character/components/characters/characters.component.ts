@@ -20,6 +20,9 @@ export class CharactersComponent implements OnInit {
   searchControl: FormControl
 
   sortValue: string = 'asc';
+  currentPage: number = 1;
+
+  totalItems: number;
 
   constructor(
     private charactersService: CharactersService,
@@ -38,6 +41,7 @@ export class CharactersComponent implements OnInit {
     this.charactersService.getCharacters()
       .subscribe(
         (value) => {
+          this.totalItems = value.info.count;
           this.characters$ = of(value.results);
         },
         (error) => {
@@ -67,8 +71,12 @@ export class CharactersComponent implements OnInit {
   handleFilters(selectedFilter) {
     this.filterService.handleSelectedFilters(selectedFilter);
     const selectedFilters = this.filterService.selectedFilters;
-    console.log('===selected',selectedFilters);
+    console.log('===selected', selectedFilters);
   }
 
+  pageChange(event) {
+    this.currentPage = event;
+    console.log('====event', event);
+  }
 
 }

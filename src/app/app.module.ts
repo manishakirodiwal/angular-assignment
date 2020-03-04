@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FilterComponent } from './character/components/filter/filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     FormsModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

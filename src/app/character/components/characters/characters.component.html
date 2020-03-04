@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="row character-container" *ngIf="(characters$|async)?.length else emptyTable">
-                <div class="col-lg-3 col-sm-3 col-6 padding-left-5 padding-right-5" *ngFor="let character of characters$|async| sort:'id':sortValue">
+                <div class="col-lg-3 col-sm-3 col-6 padding-left-5 padding-right-5" *ngFor="let character of characters$|async| sort:'id':sortValue| paginate: { itemsPerPage: 20, currentPage: currentPage,totalItems:totalItems }">
                     <div class=character-wrapper>
                         <div class="character-img">
                             <img [src]="character.image" class="img-content">
@@ -90,6 +90,8 @@
                         </div>
                     </div>
                 </div>
+                <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
+
             </div>
             <ng-template #emptyTable>No Items</ng-template>
 
