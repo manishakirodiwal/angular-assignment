@@ -11,6 +11,8 @@ import { map } from 'rxjs/operators';
 })
 export class CharactersService {
   pageNumber: number = 1;
+  characters:Array<Character> =[];
+  allCharacters:Array<Character> =[];
 
   constructor(private http: HttpClient) { }
 

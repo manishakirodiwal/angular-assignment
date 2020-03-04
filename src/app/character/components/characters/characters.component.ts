@@ -5,6 +5,7 @@ import { Character } from '../../models/character';
 import { FilterService } from '../../services/filter.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { map, filter, debounceTime } from 'rxjs/operators';
+import { FilterType } from '../../models/selected-filter';
 
 @Component({
   selector: 'app-characters',
@@ -12,8 +13,8 @@ import { map, filter, debounceTime } from 'rxjs/operators';
   styleUrls: ['./characters.component.scss']
 })
 export class CharactersComponent implements OnInit {
-  characters$: Observable<Character[]>;
-  selectedFilters: string[] = [];
+  characters: Array<Character> = [];
+  selectedFilters: Array<FilterType> = [];
 
   searchText: string;
 
@@ -34,20 +35,28 @@ export class CharactersComponent implements OnInit {
     this.getCharacters();
   }
 
-   getCharacters() {
+  getCharacters() {
     this.charactersService.getCharacters()
       .subscribe((value) => {
         this.totalItems = value.info.count;
-        this.characters$ = of(value.results);
+        this.characters = value.results;
+        this.charactersService.characters = this.characters;
+        this.charactersService.allCharacters = [...this.characters];
       }, (error) => {
-        this.characters$ = undefined;
+        this.characters = [];
       });
   }
 
+  updateCharacters() {
+    this.characters = this.charactersService.characters;
+  }
+
   handleFilters(selectedFilter) {
-    this.filterService.handleSelectedFilters(selectedFilter);
+    this.filterService.handleSelectedFilters(selectedFilter.value, selectedFilter.type);
     const selectedFilters = this.filterService.selectedFilters;
     console.log('===selected', selectedFilters);
+    this.filterService.filterCharacters();
+    this.characters = this.charactersService.characters;
   }
 
   pageChange(event) {

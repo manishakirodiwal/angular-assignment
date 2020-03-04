@@ -1,14 +1,14 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-2 col-sm-3 col-12">
-            <app-filter [(filters)]="selectedFilters"></app-filter>
+            <app-filter [(filters)]="selectedFilters" (filtersChange)="updateCharacters()"></app-filter>
         </div>
         <div class="col-lg-10 col-sm-9 col-12">
             <div class="row" *ngIf="selectedFilters.length">
                 <div class="col-lg-12">
                     <h4>Selected filters</h4>
                     <div class="selected-filters-wrapper">
-                        <div class="selected-filters" *ngFor="let filter of selectedFilters">{{filter}}
+                        <div class="selected-filters" *ngFor="let filter of selectedFilters">{{filter.value}}
                             <button (click)="handleFilters(filter)">X</button></div>
                     </div>
                 </div>
@@ -34,8 +34,8 @@
                     </select>
                 </div>
             </div>
-            <div class="row character-container" *ngIf="(characters$|async)?.length else emptyTable">
-                <div class="col-lg-3 col-sm-3 col-6 padding-left-5 padding-right-5" *ngFor="let character of characters$|async|search:searchText:'name'| sort:'id':sortValue| paginate: { itemsPerPage: 20, currentPage: currentPage,totalItems:totalItems }">
+            <div class="row character-container" *ngIf="characters.length else emptyTable">
+                <div class="col-lg-3 col-sm-3 col-6 padding-left-5 padding-right-5" *ngFor="let character of characters|search:searchText:'name'| sort:'id':sortValue| paginate: { itemsPerPage: 20, currentPage: currentPage,totalItems:totalItems }">
                     <div class=character-wrapper>
                         <div class="character-img">
                             <img [src]="character.image" class="img-content">

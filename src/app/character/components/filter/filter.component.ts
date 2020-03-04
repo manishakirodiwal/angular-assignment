@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GENDER_FILTERS, SPECIES_FILTERS } from '../../models/filter';
 import { FilterService } from '../../services/filter.service';
+import { FilterType } from '../../models/selected-filter';
 
 @Component({
   selector: 'app-filter',
@@ -10,13 +11,13 @@ import { FilterService } from '../../services/filter.service';
 export class FilterComponent implements OnInit {
   genderFilters: Array<string> = GENDER_FILTERS;
   speciesFilters: Array<string> = SPECIES_FILTERS;
-  selectedFilters: Array<string> = [];
+  selectedFilters: Array<FilterType> = [];
 
   @Input()
-  filters: Array<string>;
+  filters: Array<FilterType>;
 
   @Output()
-  filtersChange: EventEmitter<Array<string>> = new EventEmitter();
+  filtersChange: EventEmitter<Array<FilterType>> = new EventEmitter();
 
   constructor(
     private filterService: FilterService
@@ -27,8 +28,9 @@ export class FilterComponent implements OnInit {
   }
 
   filterSelect(selectedFilter: string, type: string) {
-    this.filterService.handleSelectedFilters(selectedFilter);
+    this.filterService.handleSelectedFilters(selectedFilter,type);
     this.selectedFilters = this.filterService.selectedFilters;
+    this.filterService.filterCharacters();
     this.filtersChange.emit(this.selectedFilters);
   }
 
