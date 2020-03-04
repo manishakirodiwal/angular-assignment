@@ -9,7 +9,7 @@ import { CharactersService } from '../../services/characters.service';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent implements OnInit, OnChanges {
+export class FilterComponent implements OnInit {
   genderFilters: Array<string> = GENDER_FILTERS;
   speciesFilters: Array<string> = SPECIES_FILTERS;
   selectedFilters: Array<FilterType> = [];
@@ -27,8 +27,11 @@ export class FilterComponent implements OnInit, OnChanges {
     this.selectedFilters = this.filterService.selectedFilters;
   }
 
-  ngOnChanges(value) {
-    console.log('===value', value);
+  isFilterSelected(filter) {
+    const index = this.selectedFilters.findIndex(obj => obj.value === filter);
+    if (index !== -1) {
+      return true;
+    }
   }
 
   filterSelect(selectedFilter: string, type: string) {

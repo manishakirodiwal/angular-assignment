@@ -17,14 +17,20 @@
                 <div class="col-lg-4 col-sm-4 col-12">
                     <h6 class="margin-bottom-10">Search by Name</h6>
                     <form class="form-group">
-                        <input name="searchtext" class="form-control" [(ngModel)]="searchText" />
+                        <div class="dis-flex">
+                            <input name="searchtext" class="form-control" placeholder="Search..."
+                                [(ngModel)]="searchText" />
+                            <button type="button" class="btn btn-dark">Search</button>
+                        </div>
                     </form>
                 </div>
                 <div class="col-lg-5 col-sm-5">
 
                 </div>
                 <div class="col-lg-3 col-sm-3 col-12">
-                    <select class="width-100 margin-top-25" name="fieldName" [(ngModel)]="sortValue">
+                    <h6 class="margin-bottom-10">Sort by Id</h6>
+
+                    <select class="width-100 margin-top-25" class="form-control" name="fieldName" [(ngModel)]="sortValue">
                         <option value="asc">
                             Ascending
                         </option>
@@ -35,7 +41,8 @@
                 </div>
             </div>
             <div class="row character-container" *ngIf="characters.length else emptyTable">
-                <div class="col-lg-3 col-sm-3 col-6 padding-left-5 padding-right-5" *ngFor="let character of characters|search:searchText:'name'| sort:'id':sortValue| paginate: { itemsPerPage: 20, currentPage: currentPage,totalItems:totalItems }">
+                <div class="col-lg-3 col-sm-3 col-6 padding-left-5 padding-right-5"
+                    *ngFor="let character of characters|search:searchText:'name'| sort:'id':sortValue| paginate: { itemsPerPage: 20, currentPage: currentPage,totalItems:totalItems }">
                     <div class=character-wrapper>
                         <div class="character-img">
                             <img [src]="character.image" class="img-content">
@@ -62,7 +69,7 @@
                                 <div class="info-value">
                                     {{character.status}}
                                 </div>
-                            </div>                           
+                            </div>
                             <div class="info-text">
                                 <div class="info-key">
                                     SPECIES:
@@ -70,7 +77,7 @@
                                 <div class="info-value">
                                     {{character.species}}
                                 </div>
-                            </div>    
+                            </div>
                             <div class="info-text">
                                 <div class="info-key">
                                     ORIGIN:
@@ -78,7 +85,7 @@
                                 <div class="info-value">
                                     {{character.origin?.name}}
                                 </div>
-                            </div>   
+                            </div>
                             <div class="info-text">
                                 <div class="info-key">
                                     LAST LOCATION:
@@ -86,11 +93,14 @@
                                 <div class="info-value">
                                     {{character.location?.name}}
                                 </div>
-                            </div>                          
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row character-container">
                 <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
+
             </div>
             <ng-template #emptyTable>No Items</ng-template>
 
