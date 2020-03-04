@@ -4,15 +4,17 @@
             <app-filter [(filters)]="selectedFilters" (filtersChange)="updateCharacters()"></app-filter>
         </div>
         <div class="col-lg-10 col-sm-9 col-12">
-            <div class="row" *ngIf="selectedFilters.length">
+            <div class="row">
                 <div class="col-lg-12">
                     <h4>Selected filters</h4>
-                    <div class="selected-filters-wrapper">
+                    <div class="selected-filters-wrapper" *ngIf="selectedFilters.length else emptyData">
                         <div class="selected-filters" *ngFor="let filter of selectedFilters">{{filter.value}}
                             <button (click)="handleFilters(filter)">X</button></div>
                     </div>
                 </div>
             </div>
+            <ng-template #emptyData>No Selected Filters</ng-template>
+
             <div class="row margin-top-10 margin-bottom-10">
                 <div class="col-lg-4 col-sm-4 col-12">
                     <h6 class="margin-bottom-10">Search by Name</h6>
@@ -30,7 +32,8 @@
                 <div class="col-lg-3 col-sm-3 col-12">
                     <h6 class="margin-bottom-10">Sort by Id</h6>
 
-                    <select class="width-100 margin-top-25" class="form-control" name="fieldName" [(ngModel)]="sortValue">
+                    <select class="width-100 margin-top-25" class="form-control" name="fieldName"
+                        [(ngModel)]="sortValue">
                         <option value="asc">
                             Ascending
                         </option>
@@ -98,10 +101,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row character-container">
+            <!-- <div class="row character-container">
                 <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
-
-            </div>
+            </div> -->
             <ng-template #emptyTable>No Items</ng-template>
 
         </div>

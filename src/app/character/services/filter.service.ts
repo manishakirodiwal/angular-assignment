@@ -12,7 +12,7 @@ export class FilterService {
     private charactersService: CharactersService
   ) { }
 
-  handleSelectedFilters(selectedFilter, type) {
+  handleSelectedFilters(selectedFilter, type): void {
     const index = this.selectedFilters.findIndex(obj => obj.value === selectedFilter);
     if (index === -1) {
       const filterType: FilterType = new FilterType();
@@ -25,7 +25,7 @@ export class FilterService {
   }
 
 
-  filterCharacters() {
+  filterCharacters(): void {
     let characters = [...this.charactersService.allCharacters];
     const genderSelectedFilters = [];
     const speciesSelectedFilters = [];
@@ -50,14 +50,14 @@ export class FilterService {
         if (speciesSelectedFilters.includes(character.species)) {
           this.insertItem(filteredCharacter, character);
         }
-      } else if(!genderSelectedFilters.length && !speciesSelectedFilters.length) {
+      } else if (!genderSelectedFilters.length && !speciesSelectedFilters.length) {
         this.insertItem(filteredCharacter, character);
       }
       this.charactersService.characters = filteredCharacter;
     }
   }
 
-  insertItem(filteredCharacter: any[], character: any) {
+  insertItem(filteredCharacter: any[], character: any): void {
     const index = filteredCharacter.findIndex(obj => obj.id === character.id);
     if (index === -1) {
       filteredCharacter.push(character);
