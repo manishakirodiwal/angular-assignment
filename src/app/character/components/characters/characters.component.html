@@ -1,11 +1,11 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-lg-2 col-sm-3 col-12">
             <app-filter [(filters)]="selectedFilters"></app-filter>
         </div>
-        <div class="col-md-10">
+        <div class="col-lg-10 col-sm-9 col-12">
             <div class="row" *ngIf="selectedFilters.length">
-                <div class="col-md-12">
+                <div class="col-lg-12">
                     <h4>Selected filters</h4>
                     <div class="selected-filters-wrapper">
                         <div class="selected-filters" *ngFor="let filter of selectedFilters">{{filter}}
@@ -14,16 +14,16 @@
                 </div>
             </div>
             <div class="row margin-top-10 margin-bottom-10">
-                <div class="col-md-4">
-                    <h6>Search by Name</h6>
+                <div class="col-lg-4 col-sm-4 col-12">
+                    <h6 class="margin-bottom-10">Search by Name</h6>
                     <form [formGroup]="group">
                         <input name="searchtext" formControlName="search" />
                     </form>
                 </div>
-                <div class="col-md-5">
+                <div class="col-lg-5 col-sm-5">
 
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 col-sm-3 col-12">
                     <select class="width-100 margin-top-25" name="fieldName" [(ngModel)]="sortValue">
                         <option value="asc">
                             Ascending
@@ -34,15 +34,15 @@
                     </select>
                 </div>
             </div>
-            <div class="row character-container">
-                <div class="col-md-3 padding-left-5 padding-right-5" *ngFor="let character of characters$|async| sort:'id':sortValue">
+            <div class="row character-container" *ngIf="(characters$|async)?.length else emptyTable">
+                <div class="col-lg-3 col-sm-3 col-6 padding-left-5 padding-right-5" *ngFor="let character of characters$|async| sort:'id':sortValue">
                     <div class=character-wrapper>
                         <div class="character-img">
-                            <img [src]="character.image" class="img-content" height="220" width="220">
+                            <img [src]="character.image" class="img-content">
                             <div class="character-name">
                                 <div>{{character.name}}</div>
                                 <span class="font-10">id:{{character.id}}
-                                    - created {{character.created}}</span>
+                                    - created {{character.yearDifference}} years ago</span>
                             </div>
 
                         </div>
@@ -91,6 +91,8 @@
                     </div>
                 </div>
             </div>
+            <ng-template #emptyTable>No Items</ng-template>
+
         </div>
     </div>
 </div>

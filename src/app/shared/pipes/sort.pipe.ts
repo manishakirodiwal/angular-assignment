@@ -19,7 +19,7 @@ export class SortPipe implements PipeTransform {
       this.actualItems = items;
     }
 
-    if (order === 'desc') {
+    if (order === 'asc') {
       return items.sort((left, right) => {
         if (left[fieldName] < right[fieldName])
           return -1;
@@ -28,7 +28,6 @@ export class SortPipe implements PipeTransform {
       })
     }
 
-    // asc
     return items.sort((left, right) => {
       if (left[fieldName] < right[fieldName])
         return 1;

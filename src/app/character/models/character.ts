@@ -11,4 +11,5 @@ export class Character {
     episode: Array<any>;
     url: string;
     created: string;
+    yearDifference: string;
 }

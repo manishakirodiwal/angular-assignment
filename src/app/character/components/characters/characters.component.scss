@@ -30,6 +30,8 @@
 
       .img-content{
           border-radius: 10px 10px 0px 0px;
+          width: 100%;
+          height: auto;
       }
 
       .character-name {
@@ -59,7 +61,7 @@
         }
         .info-value {
           color: orange;
-
+text-align: right;
           font-size: 10px;
         }
       }

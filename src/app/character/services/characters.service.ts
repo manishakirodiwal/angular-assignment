@@ -15,13 +15,27 @@ export class CharactersService {
 
   getCharacters(): Observable<any> {
     return this.http
-      .get<any[]>(`${environment.apiEndPoint}/api/character`)
+      .get<any>(`${environment.apiEndPoint}/api/character`)
+      .pipe(map(value => {
+        return this.assignYearsDifference(value);
+      }));
   }
-
 
   searchCharacters(q: string): Observable<any> {
     return this.http
-      .get<any[]>(`${environment.apiEndPoint}/api/character?q=${q}`);
+      .get<any>(`${environment.apiEndPoint}/api/character?name=${q}`)
+      .pipe(map(value => {
+        return this.assignYearsDifference(value);
+      }));
   }
 
+  assignYearsDifference(value) {
+    const valueResults = value.results;
+    for (const value of valueResults) {
+      const createdDate = new Date(value.created).getFullYear();
+      const today = new Date().getFullYear();
+      value.yearDifference = today - createdDate;
+    }
+    return value;
+  }
 }

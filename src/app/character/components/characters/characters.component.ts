@@ -19,7 +19,7 @@ export class CharactersComponent implements OnInit {
   group: FormGroup; // form - collection of control
   searchControl: FormControl // input box
 
-  sortValue: string;
+  sortValue: string ='asc';
 
   constructor(
     private charactersService: CharactersService,
@@ -37,21 +37,31 @@ export class CharactersComponent implements OnInit {
   ngOnInit() {
     this.selectedFilters = this.filterService.selectedFilters;
     this.charactersService.getCharacters()
-      .subscribe((value) => {
-        this.characters$ = of(value.results);
-      });
+      .subscribe(
+        (value) => {
+          this.characters$ = of(value.results);
+        },
+        (error) => {
+          this.characters$ = undefined;
+        }
+      );
 
     this.searchControl
       .valueChanges // value change event.publisher/observable
       .pipe(filter(value => !!value)) // non empty filter
-      .pipe(map(value => value.trim().toLowerCase()))
+      .pipe(map(value => value.toLowerCase()))
       .pipe(debounceTime(500))
       .subscribe(value => {
         console.log('*' + value + '*');
         this.charactersService.searchCharacters(value)
-          .subscribe((characterData) => {
-            this.characters$ = of(characterData.results);
-          });
+          .subscribe(
+            (value) => {
+              this.characters$ = of(value.results);
+            },
+            (error) => {
+              this.characters$ = undefined;
+            }
+          );
       });
   }
 
