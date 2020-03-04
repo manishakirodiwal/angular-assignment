@@ -53,8 +53,6 @@ export class CharactersComponent implements OnInit {
 
   handleFilters(selectedFilter) {
     this.filterService.handleSelectedFilters(selectedFilter.value, selectedFilter.type);
-    const selectedFilters = this.filterService.selectedFilters;
-    console.log('===selected', selectedFilters);
     this.filterService.filterCharacters();
     this.characters = this.charactersService.characters;
   }

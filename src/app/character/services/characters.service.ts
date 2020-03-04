@@ -11,8 +11,8 @@ import { map } from 'rxjs/operators';
 })
 export class CharactersService {
   pageNumber: number = 1;
-  characters:Array<Character> =[];
-  allCharacters:Array<Character> =[];
+  characters: Array<Character> = [];
+  allCharacters: Array<Character> = [];
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +20,23 @@ export class CharactersService {
     return this.http
       .get<any>(`${environment.apiEndPoint}/api/character/?page=${this.pageNumber}`)
       .pipe(map(value => {
+        return this.assignYearsDifference(value);
+      }));
+  }
+
+  getFilteredCharacters(): Observable<any> {
+    const obj = {
+      gender: 'female'
+    };
+    const option = {
+      params: obj
+    };
+    return this.http
+      .get<any>(
+        `${environment.apiEndPoint}/api/character/?page=${this.pageNumber}`, option
+      )
+      .pipe(map(value => {
+        this.characters = value.results;
         return this.assignYearsDifference(value);
       }));
   }
