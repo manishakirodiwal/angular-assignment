@@ -10,20 +10,13 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CharactersService {
+  pageNumber: number = 1;
 
   constructor(private http: HttpClient) { }
 
   getCharacters(): Observable<any> {
     return this.http
-      .get<any>(`${environment.apiEndPoint}/api/character`)
-      .pipe(map(value => {
-        return this.assignYearsDifference(value);
-      }));
-  }
-
-  searchCharacters(q: string): Observable<any> {
-    return this.http
-      .get<any>(`${environment.apiEndPoint}/api/character?name=${q}`)
+      .get<any>(`${environment.apiEndPoint}/api/character/?page=${this.pageNumber}`)
       .pipe(map(value => {
         return this.assignYearsDifference(value);
       }));

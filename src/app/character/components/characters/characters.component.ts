@@ -16,8 +16,6 @@ export class CharactersComponent implements OnInit {
   selectedFilters: string[] = [];
 
   searchText: string;
-  group: FormGroup;
-  searchControl: FormControl
 
   sortValue: string = 'asc';
   currentPage: number = 1;
@@ -26,45 +24,23 @@ export class CharactersComponent implements OnInit {
 
   constructor(
     private charactersService: CharactersService,
-    private filterService: FilterService,
-    private formBuilder: FormBuilder
+    private filterService: FilterService
   ) {
 
-    this.searchControl = new FormControl();
-    this.group = this.formBuilder.group({
-      'search': this.searchControl
-    })
   }
 
   ngOnInit() {
     this.selectedFilters = this.filterService.selectedFilters;
-    this.charactersService.getCharacters()
-      .subscribe(
-        (value) => {
-          this.totalItems = value.info.count;
-          this.characters$ = of(value.results);
-        },
-        (error) => {
-          this.characters$ = undefined;
-        }
-      );
+    this.getCharacters();
+  }
 
-    this.searchControl
-      .valueChanges
-      .pipe(filter(value => !!value))
-      .pipe(map(value => value.toLowerCase()))
-      .pipe(debounceTime(500))
-      .subscribe(value => {
-        console.log('*' + value + '*');
-        this.charactersService.searchCharacters(value)
-          .subscribe(
-            (value) => {
-              this.characters$ = of(value.results);
-            },
-            (error) => {
-              this.characters$ = undefined;
-            }
-          );
+   getCharacters() {
+    this.charactersService.getCharacters()
+      .subscribe((value) => {
+        this.totalItems = value.info.count;
+        this.characters$ = of(value.results);
+      }, (error) => {
+        this.characters$ = undefined;
       });
   }
 
@@ -76,7 +52,8 @@ export class CharactersComponent implements OnInit {
 
   pageChange(event) {
     this.currentPage = event;
-    console.log('====event', event);
+    this.charactersService.pageNumber = this.currentPage;
+    this.getCharacters();
   }
 
 }
